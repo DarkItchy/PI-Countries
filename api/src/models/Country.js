@@ -9,7 +9,7 @@ module.exports = (sequelizeparam) => {
       allowNull: false,
     },
     id: {
-      type: DataTypes.STRING(3),
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       primaryKey: true
@@ -36,10 +36,10 @@ module.exports = (sequelizeparam) => {
     population: {
       type: DataTypes.INTEGER
     },
-    createdInDb: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
-    }
+    // createdInDb: {
+    //   type: DataTypes.BOOLEAN,
+    //   allowNull: false,
+    //   defaultValue: true
+    // }
   });
 };
