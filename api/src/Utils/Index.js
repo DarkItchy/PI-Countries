@@ -31,20 +31,17 @@ const apiInfo = async () => {
     })
 };
 
-const dbInfo = async () => {
-    return await Country.findAll({
-        include: {
-            model: Activity
-        }
-    })
+const newActivity = async (params) => {
+    const createdActivity = await Activity.create({
+        name: params.name,
+        difficulty: params.difficulty,
+        duration: params.duration,
+        season: params.season
+    });
+    const countriesDb = await Country.findAll({
+        where: {name: params.countries}
+    });
+    createdActivity.addCountry(countriesDb);
 };
 
-const allInfo = async () => {
-    const aInfo = await apiInfo();
-    const dInfo = await dbInfo();
-    const totalInfo = aInfo.concat(dInfo);
-    return totalInfo;
-
-}
-
-module.exports = {apiInfo, dbInfo, allInfo};
+module.exports = {apiInfo, newActivity};

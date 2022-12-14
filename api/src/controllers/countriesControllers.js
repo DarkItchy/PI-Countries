@@ -1,11 +1,13 @@
 const { Op } = require("sequelize");
-const {Country} = require("../db");
+const {Country, Activity} = require("../db");
 
 const getCountries = async (req, res) => {
     try{
         const name = req.query.name;
 
-        const Info = await Country.findAll();
+        const info = await Country.findAll({
+            attributes: ["img", "name", "id", "continent"]
+        });
         
         if (name){
             let countryName = await Country.findAll({
@@ -13,16 +15,32 @@ const getCountries = async (req, res) => {
                     name: {
                         [Op.iLike]: `%${name}%`
                     }
-                }
+                },
+                attributes: ["img", "name", "id", "continent"]
             });
             if (countryName.length) return res.json(countryName);
             else return res.status(404).json("No se encuentra el país")
         };
-        return res.json(Info);
-    }catch (e){
+        return res.json(info);
+    }catch (e) {
         res.status(400).send(e.toString());
     };
     };
     
 
-module.exports = {getCountries};
+const countryDetails =  async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const info = await Country.findByPk(id, {
+            include: {
+                model: Activity
+            }
+        });
+        res.json(info);
+    } catch (e) {
+        res.status(400).send(e.toString());
+    };
+};
+
+module.exports = {getCountries, countryDetails};
