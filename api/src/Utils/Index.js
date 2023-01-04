@@ -6,7 +6,7 @@ const apiInfo = async () => {
     const Info = await response.data.map(e => {
         return {
             name: e.name.common,
-            continent: e.continents[0],
+            continent: e.region,
             img: e.flags[0],
             id: e.cca3,
             capital: e.capital ? e.capital[0] : "Este pais no tiene capital",

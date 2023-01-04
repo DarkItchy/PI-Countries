@@ -1,6 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { filterByActivityS, filterByContinent } from "../actions";
+
 
 const OptionBar = () => {
+    
+    const dispatch = useDispatch();
+    
+    const handleFilterByContinent = (e) => {
+        dispatch(filterByContinent(e.target.value))
+    };
+
+    const handleFilterByActivityS = (e) => {
+        dispatch(filterByActivityS(e.target.value))
+    };
+    
     return (
         <div>
             <h3>Ordenar</h3>
@@ -16,23 +30,26 @@ const OptionBar = () => {
             </select>
             <h3>Filtrar</h3>
             Continente:
-            <select title="Continente">
-                <option value={"AFR"}>Africa</option>
-                <option value={"AME"}>America</option>
-                <option value={"ASI"}>Asia</option>
-                <option value={"EUR"}>Europa</option>
-                <option value={"OCE"}>Oceania</option>
+            <select onChange={e => handleFilterByContinent(e)} title="Continente">
+                <option value={"ALL"}>Todos</option>
+                <option value={"Africa"}>Africa</option>
+                <option value={"Americas"}>America</option>
+                <option value={"Asia"}>Asia</option>
+                <option value={"Europe"}>Europa</option>
+                <option value={"Oceania"}>Oceania</option>
             </select>
             <h5>Actividad:</h5>
             Estación:
-            <select title="Estación">
-                <option value={"PRI"}>Primavera</option>
-                <option value={"VER"}>Verano</option>
-                <option value={"OTO"}>Otoño</option>
-                <option value={"INV"}>Invierno</option>
+            <select onChange={e => handleFilterByActivityS(e)} title="Estación">
+                <option value={"ALL"}>Todos</option>
+                <option value={"Primavera"}>Primavera</option>
+                <option value={"Verano"}>Verano</option>
+                <option value={"Otoño"}>Otoño</option>
+                <option value={"Invierno"}>Invierno</option>
             </select>
             Dificultad:
             <select title="Dificultad">
+                <option value={"ALL"}>Todos</option>
                 <option value={"1"}>1</option>
                 <option value={"2"}>2</option>
                 <option value={"3"}>3</option>

@@ -6,7 +6,10 @@ const getCountries = async (req, res) => {
         const name = req.query.name;
 
         const info = await Country.findAll({
-            attributes: ["img", "name", "id", "continent"]
+            include: {  
+                model: Activity
+            }
+            /*attributes: ["img", "name", "id", "continent"]*/
         });
         
         if (name){
@@ -16,7 +19,10 @@ const getCountries = async (req, res) => {
                         [Op.iLike]: `%${name}%`
                     }
                 },
-                attributes: ["img", "name", "id", "continent"]
+                include: {
+                    model: Activity
+                }
+                /*attributes: ["img", "name", "id", "continent"]*/
             });
             if (countryName.length) return res.json(countryName);
             else return res.status(404).json("No se encuentra el país")
